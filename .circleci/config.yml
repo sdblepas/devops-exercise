@@ -12,6 +12,8 @@ jobs:
       - run:
           name: Run tests
           command: pytest test_app.py
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: docker build and push to dockerhub
           command: |
