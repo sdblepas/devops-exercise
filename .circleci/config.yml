@@ -42,7 +42,7 @@ jobs:
           name: Push Artifacts to Artifactory
           command: |
             TAG=1.$CIRCLE_BUILD_NUM
-            ./jfrog config add --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USERERNAME --apikey $ARTIFACTORY_API_KEY --interactive=false
+            ./jfrog config add devops-exercise --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USERERNAME --apikey $ARTIFACTORY_API_KEY --interactive=false
             ./jfrog rt u test-results/junit.xml $ARTIFACTORY_REPO --build-name=$IMAGE_NAME:1.$CIRCLE_BUILD_NUM --build-number=$CIRCLE_BUILD_NUM
 workflows:
   sample:
