@@ -32,8 +32,8 @@ jobs:
           name: Push to Artifactory
           command: |
             TAG=1.$CIRCLE_BUILD_NUM
-            echo $ARTIFACTORY_API_KEY | docker login devopsexercise.jfrog.io -u $ARTIFACTORY_USERNAME --password-stdin
-            docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG devopsexercise.jfrog.io/devops-exercise-docker/$IMAGE_NAME-docker-remote:$TAG
+            echo $ARTIFACTORY_API_KEY | docker login $ARTIFACTORY_URL -u $ARTIFACTORY_USERNAME --password-stdin
+            docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG $ARTIFACTORY_URL/$ARTIFACTORY_REPO/$IMAGE_NAME-docker-remote:$TAG
             docker push $ARTIFACTORY_URL/$ARTIFACTORY_REPO/$IMAGE_NAME-docker-remote:$TAG
       - run:
           name: Install JFrog CLI
@@ -42,7 +42,7 @@ jobs:
           name: Push Artifacts to Artifactory
           command: |
             TAG=1.$CIRCLE_BUILD_NUM
-            ./jfrog config add artifactory_config --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USERERNAME --apikey $ARTIFACTORY_API_KEY --interactive=false
+            ./jfrog config add --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USERERNAME --apikey $ARTIFACTORY_API_KEY --interactive=false
             ./jfrog rt u test-results/junit.xml $ARTIFACTORY_REPO --build-name=$IMAGE_NAME:1.$CIRCLE_BUILD_NUM --build-number=$CIRCLE_BUILD_NUM
 workflows:
   sample:
