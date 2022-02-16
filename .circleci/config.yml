@@ -11,7 +11,13 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pytest test_app.py
+          command: |
+            mkdir test-results
+            pytest --junitxml=test-results/junit.xml test_app.py 
+       - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
       - setup_remote_docker:
           version: 19.03.13
       - run:
