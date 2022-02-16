@@ -7,10 +7,10 @@ def app():
     yield client
 
 def test_signup(client):
-    response = client.post("/signup", data =json.dumps({
-        "name":"Test"
-        "password":"test"
-        }))
+    response = client.post("/signup", data ={
+        "name": Test
+        "password":test
+        })
     assert response.status_code == 200
 def test_login():
     return True
