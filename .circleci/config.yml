@@ -29,7 +29,7 @@ jobs:
             TAG=1.$CIRCLE_BUILD_NUM
             IMAGE_NAME=devops_exercise
             echo $ARTIFACTORY_API_KEY | docker login devopsexercise.jfrog.io -u $ARTIFACTORY_USERNAME --password-stdin
-            docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG devopsexercise.jfrog.io/$ARTIFACTORY_DOMAIN.docker-virtual/$DOCKER_REPO:$IMAGE_NAME
+            docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG devopsexercise.jfrog.io/devops-exercise.docker-virtual/$IMAGE_NAME:$TAG
             docker push devopsexercise.jfrog.io/devops-exercise-docker-virtual/$IMAGE_NAME:$TAG
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
