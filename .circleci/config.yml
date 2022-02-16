@@ -12,14 +12,14 @@ jobs:
       - run:
           name: Run tests
           command: pytest test_app.py
-      - run: |
+      - run:
           name: docker build and push to dockerhub
-          command:
+          command: |
            TAG=1.$CIRCLE_BUILD_NUM
            IMAGE_NAME=devops_exercise
-           docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
-           echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-           docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
+           #docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
+           #echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+           #docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
 
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
