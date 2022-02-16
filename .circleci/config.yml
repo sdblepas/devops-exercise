@@ -30,7 +30,7 @@ jobs:
             IMAGE_NAME=devops_exercise
             echo $ARTIFACTORY_API_KEY | docker login devopsexercise.jfrog.io -u $ARTIFACTORY_USERNAME --password-stdin
             docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG devopsexercise.jfrog.io/devops-exercise-docker-virtual/$IMAGE_NAME-docker:$TAG
-            docker push devopsexercise.jfrog.io/devops-exercise-docker-virtual/$IMAGE_NAME-docker:$TAG
+            docker push devopsexercise.jfrog.io/devops-exercise-docker-virtual/$IMAGE_NAME-docker-remote:$TAG
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
