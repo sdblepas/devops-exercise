@@ -12,5 +12,5 @@ def test_signup(client):
         password="test"
         })
     assert response.status_code == 200
-    """
 def test_login():
+    return True
