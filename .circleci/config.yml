@@ -6,6 +6,9 @@ jobs:
     docker:
       - image: cimg/python:3.10.2
     steps:
+      
+      TAG=1.$CIRCLE_BUILD_NUM
+      IMAGE_NAME=devops_exercise
       - checkout
       - python/install-packages:
           pkg-manager: pip
@@ -23,8 +26,6 @@ jobs:
       - run:
           name: docker build and push to dockerhub
           command: |
-           TAG=1.$CIRCLE_BUILD_NUM
-           IMAGE_NAME=devops_exercise
            docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG .
            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
@@ -32,13 +33,18 @@ jobs:
       - run: 
           name: Push to Artifactory
           command: |
-            TAG=1.$CIRCLE_BUILD_NUM
-            IMAGE_NAME=devops_exercise
             echo $ARTIFACTORY_API_KEY | docker login devopsexercise.jfrog.io -u $ARTIFACTORY_USERNAME --password-stdin
             docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG devopsexercise.jfrog.io/devops-exercise-docker/$IMAGE_NAME-docker-remote:$TAG
-            docker push devopsexercise.jfrog.io/devops-exercise-docker/$IMAGE_NAME-docker-remote:$TAG
+            docker push $ARTIFACTORY_URL/$ARTIFACTORY_REPO/$IMAGE_NAME-docker-remote:$TAG
+      - run:
+          name: Install JFrog CLI
+          command: curl -fL https://getcli.jfrog.io | sh
+      - run:
+          name: Push to Artifactory
+          command: |
+            ./jfrog config add artifactory_config --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USERERNAME --apikey $ARTIFACTORY_API_KEY --interactive=false
+          ./jfrog rt u test-results/junit.xml $ARTIFACTORY_REPO --build-name=$IMAGE_NAME:1.$CIRCLE_BUILD_NUM --build-number=$CIRCLE_BUILD_NUM
 workflows:
-  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  sample:
     jobs:
       - build-and-test
