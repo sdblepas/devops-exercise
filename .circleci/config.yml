@@ -19,6 +19,7 @@ jobs:
           command: |
            TAG=1.$CIRCLE_BUILD_NUM
            IMAGE_NAME=devops_exercise
+           DOCKERHUB_USERNAME=lexarity
            docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG .
            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
