@@ -26,7 +26,7 @@ jobs:
            TAG=1.$CIRCLE_BUILD_NUM
            docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG .
            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-           docker push $DOCKERHUB_USERNAME/$IMAGE_NAME
+           docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
 
       - run: 
           name: Push to Artifactory
@@ -34,7 +34,7 @@ jobs:
             TAG=1.$CIRCLE_BUILD_NUM
             echo $ARTIFACTORY_API_KEY | docker login $ARTIFACTORY_URL -u $ARTIFACTORY_USERNAME --password-stdin
             docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG $ARTIFACTORY_URL/$ARTIFACTORY_REPO/$IMAGE_NAME-docker-remote:$TAG
-            docker push $ARTIFACTORY_URL/$ARTIFACTORY_REPO/$IMAGE_NAME-docker-remote:$TAG
+            docker push $ARTIFACTORY_URL/$ARTIFACTORY_REPO/$IMAGE_NAME-docker-remote:latest
       - run:
           name: Install JFrog CLI
           command: curl -fL https://getcli.jfrog.io | sh
