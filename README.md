@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/sdblepas/devops-exercise/tree/main.svg?style=svg)](https://circleci.com/gh/sdblepas/devops-exercise/tree/main)
 ## Overview
 
 This repository takes [Flaskex](https://github.com/anfederico/flaskex) containerizes it.
